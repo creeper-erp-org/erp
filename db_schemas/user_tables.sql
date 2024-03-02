@@ -41,8 +41,6 @@ create table user_details(
 	updated_at timestamp NOT null default now()
 ); 
 
---drop table user_details;
-
 ---- USER_DETAILS Table SQL statements END
 
 
