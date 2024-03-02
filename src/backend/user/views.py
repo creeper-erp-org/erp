@@ -2,14 +2,14 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import UserDetails
 from .serializers import UserDetailsSerializer
-import json
+from rest_framework import status
 
 
-class ListUsers(APIView):
-    def get(self, request):
-        queryset = UserDetails.objects.all()
-        # print(queryset)
-        serializer  = UserDetailsSerializer(queryset, many = True)
-        return Response(serializer.data)
-    
+class UserDetailsInsertData(APIView):
+    def post(self, request):
+        serializer = UserDetailsSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
