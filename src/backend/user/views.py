@@ -7,10 +7,22 @@ from .models import UserDetails
 from .serializers import UserDetailsSerializer, UserSerializer, LoginSerializer
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
-
+from .utils import EmailUtils
 
 
 class UserRegistrationView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            user = User.objects.create_user(username=serializer.data["email"], email=serializer.data["email"])
+            user.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserSetPasswordView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -70,7 +82,7 @@ class UserDetailsInsertData(APIView):
 
 
 class ProtectedView(APIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def get(self, request):
         # Access user information from the request object
@@ -78,5 +90,6 @@ class ProtectedView(APIView):
 
         # Perform some operation requiring authentication
         data = f"Hello, {user.username}! You are authenticated."
+        EmailUtils.send_email(['richardfranklin41@gmail.com'], 'Test Email', 'This is the message for the said test email')
 
         return Response(data, status=status.HTTP_200_OK)
