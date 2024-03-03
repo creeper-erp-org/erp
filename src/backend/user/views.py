@@ -8,6 +8,7 @@ from .serializers import UserDetailsSerializer, UserSerializer, LoginSerializer
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from .utils import EmailUtils
+from datetime import datetime
 
 
 class UserRegistrationView(APIView):
@@ -17,8 +18,15 @@ class UserRegistrationView(APIView):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             user = User.objects.create_user(username=serializer.data["email"], email=serializer.data["email"])
+            
+            site_url = request.scheme + '://' + request.get_host() + '/set/password/'
+            subject = "[ACTION REQUIRED] Set your account password"
+            message = f"Hi User,\nYour account has been created for the erp system at {datetime.now()}.\nPlease click on the below link to change your account password.\n'{site_url}\n\nRegards,\nERP Support"
+            recipient_list = [serializer.data["email"]]
+            EmailUtils.send_email(recipient_list, subject, message)
+            
             user.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.data["email"], status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -90,6 +98,12 @@ class ProtectedView(APIView):
 
         # Perform some operation requiring authentication
         data = f"Hello, {user.username}! You are authenticated."
-        EmailUtils.send_email(['richardfranklin41@gmail.com'], 'Test Email', 'This is the message for the said test email')
+        # EmailUtils.send_email(['richardfranklin41@gmail.com'], 'Test Email', 'This is the message for the said test email')
+        
+        site_url = request.scheme + '://' + request.get_host() + '/set/password/'
+        subject = "[ACTION REQUIRED] Set your account password"
+        message = f"Hi User,\nYour account has been created for the erp system at {datetime.now()}.\nPlease click on the below link to change your account password.\n'{site_url}\n\nRegards,\nERP Support"
+        recipient_list = ['richardfranklin41@gmail.com']
+        EmailUtils.send_email(recipient_list, subject, message)
 
-        return Response(data, status=status.HTTP_200_OK)
+        return Response({"data":"done"}, status=status.HTTP_200_OK)
