@@ -11,7 +11,7 @@ class UserDetails(models.Model):
     first_name = models.CharField(max_length=255, null=False)
     middle_name = models.CharField(max_length=255, null=True, blank=True)
     last_name = models.CharField(max_length=255, null=True, blank=True)
-    email_id = models.EmailField(null=False)
+    email_id = models.EmailField(null=False, unique=True)
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES, null=False)
     current_address = models.CharField(max_length=255, null=False)
     permanent_address = models.CharField(max_length=255, null=False)
