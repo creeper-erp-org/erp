@@ -29,7 +29,7 @@ create table user_details(
 	first_name varchar NOT NULL,
 	middle_name varchar,
 	last_name varchar,
-	email_id varchar NOT NULL,
+	email_id varchar unique NOT NULL,
 	gender gender_dtype NOT NULL,
 	current_address varchar NOT NULL,
 	permanent_address varchar NOT NULL,
