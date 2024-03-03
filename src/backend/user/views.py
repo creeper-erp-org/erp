@@ -26,7 +26,7 @@ class UserRegistrationView(APIView):
             EmailUtils.send_email(recipient_list, subject, message)
             
             user.save()
-            return Response({request.get_full_path()}, status=status.HTTP_201_CREATED)
+            return Response(serializer.data["email"], status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
