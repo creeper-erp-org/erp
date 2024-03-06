@@ -1,6 +1,6 @@
 version: "3.3"
 services:
- db:
+  db:
     container_name: 'database-postgres'
     image: postgres:14-alpine
     volumes:
@@ -11,9 +11,11 @@ services:
       - POSTGRES_DB=erp_processes_mng
       - POSTGRES_USER=erp_admin
       - POSTGRES_PASSWORD=erp_user_pass@pcr
- web:
+  backend:
     container_name: 'erp'
-    build: .
+    build:
+      context: .
+      dockerfile: ./docker/backend/Dockerfile
     working_dir: /erp/src/backend/
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
@@ -26,3 +28,15 @@ services:
       - POSTGRES_PASSWORD=erp_user_pass@pcr
     depends_on:
       - db
+  web:
+    container_name: 'webapp'
+    build: 
+      context: .
+      dockerfile: ./docker/webapp/Dockerfile
+    working_dir: /erp/src/webapp/
+    volumes:
+      - .:/erp
+    ports:
+      - "4200:4200"
+      - "49153:49153"
+    command: ng serve --host 0.0.0.0 --poll 20
