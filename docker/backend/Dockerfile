@@ -3,4 +3,4 @@ WORKDIR /backend
 COPY requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt
 
-COPY src/backend/ /backend/
+# COPY src/backend/ /backend/
