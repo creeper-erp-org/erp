@@ -1,24 +1,28 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  
+
+styleUrl: './login.component.css'
 })
 
 
 export class LoginComponent {
   title = 'login-page'
+  loginForm: FormGroup;
 
-  // loginForm: any;
-  username: string = '';
-  password: string = '';
-  
+  constructor(private fb: FormBuilder) {
+    this.loginForm = this.fb.group({
+      username_val: ['', Validators.required],
+      password_val: ['', Validators.required],
+    });
+  }
+
   updateUserProfile() {
-    console.log('Hello');
+    console.log(this.loginForm.value);
     
   }
 }

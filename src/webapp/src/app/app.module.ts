@@ -1,25 +1,24 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app.routes';
-
-  
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent
+  ],
   imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    NgModule,
-    FormControl,
     BrowserModule,
-    AppRoutingModule
-  ]
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
 })
-
 
 export class AppModule { }
