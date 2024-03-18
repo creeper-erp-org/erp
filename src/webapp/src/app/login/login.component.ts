@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../services/auth/auth.service';
+
 
 @Component({
   selector: 'app-login',
@@ -13,16 +15,18 @@ styleUrl: './login.component.css'
 export class LoginComponent {
   title = 'login-page'
   loginForm: FormGroup;
-
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+    private authService: AuthService
+    ) {
     this.loginForm = this.fb.group({
-      username_val: ['', Validators.required],
-      password_val: ['', Validators.required],
+      username: ['', Validators.required],
+      password: ['', Validators.required],
     });
   }
 
-  updateUserProfile() {
-    console.log(this.loginForm.value);
-    
+  login() {
+
+    console.log(this.loginForm.value.username);
+    this.authService.login(this.loginForm.value.username, this.loginForm.value.password)
   }
 }
