@@ -107,3 +107,21 @@ class ProtectedView(APIView):
         EmailUtils.send_email(recipient_list, subject, message)
 
         return Response({"data":"done"}, status=status.HTTP_200_OK)
+
+
+class LoginRefreshView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        refresh_token = request.POST["refresh_token"]
+        if not refresh_token:
+            return Response({'error': 'Request token not provided'}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            refresh_token = RefreshToken(refresh_token)
+            access_token = str(refresh_token.access_token)
+        except Exception as e:
+            Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({
+                'access':str(access_token),
+                'refresh': str(refresh_token),
+            })
