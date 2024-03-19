@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     "rest_framework_simplejwt.token_blacklist",
-    'user'
+    "corsheaders",
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -158,4 +159,4 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME_LATE_USER': timedelta(days=30),
 }
 
-CORS_ALLOW_ORIGIN = ['*']
+CORS_ORIGIN_ALLOW_ALL = True
