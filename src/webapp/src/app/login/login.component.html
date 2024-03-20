@@ -9,6 +9,7 @@
 
 <body class="body">
     <div class="card card-body" >
+        <p *ngIf="errMes"> {{ errMes }}!</p>
         <form [formGroup]="loginForm" (submit)="login()">
             <div>
                 <label for="username">Username:</label>

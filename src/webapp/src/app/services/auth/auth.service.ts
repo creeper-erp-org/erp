@@ -13,7 +13,6 @@ export class AuthService {
   }
 
   login(email: string, password: string) : Observable<any> {
-    console.log(email, password);
     const url = 'http://localhost:8000/login/'
     const data = { email: email, password: password };
     const httpOptions = {
