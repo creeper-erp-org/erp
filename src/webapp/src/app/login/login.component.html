@@ -9,14 +9,15 @@
 
 <body class="body">
     <div class="card card-body" >
-        <form [formGroup]="loginForm" (submit)="updateUserProfile()">
+        <p *ngIf="errMes"> {{ errMes }}!</p>
+        <form [formGroup]="loginForm" (submit)="login()">
             <div>
                 <label for="username">Username:</label>
-                <input type="text" id="username" name="username" formControlName="username_val"  required>
+                <input type="text" id="username" name="username" formControlName="username"  required>
               </div>
               <div>
                 <label for="password">Password:</label>
-                <input type="password" id="password" name="password" formControlName="password_val" required>
+                <input type="password" id="password" name="password" formControlName="password" required>
               </div>
               <button type="submit">Login</button>
         </form> 
