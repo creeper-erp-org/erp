@@ -124,4 +124,4 @@ class LoginRefreshView(APIView):
         return Response({
                 'access':str(access_token),
                 'refresh': str(refresh_token),
-            })
+            }, status=status.HTTP_200_OK)
