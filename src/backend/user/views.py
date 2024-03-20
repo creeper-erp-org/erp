@@ -85,8 +85,8 @@ class UserDetailsInsertData(APIView):
         serializer = UserDetailsSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"user_email": str(serializer.data['email']), "created": "True"}, status=status.HTTP_201_CREATED)
+        return Response({"error":"user details is invalid"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ProtectedView(APIView):
