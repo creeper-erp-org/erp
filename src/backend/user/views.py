@@ -42,6 +42,18 @@ class UserSetPasswordView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class UserSetPasswordView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            user = User.objects.get(username=serializer.data["email"], email=serializer.data["email"])
+            user.set_password(serializer.data["password"])  # This will hash the password before saving
+            user.save()
+            return Response({'message': 'password updated/changed'}, status=status.HTTP_201_CREATED)
+        return Response({'error': 'password updation failed'}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class LoginView(APIView):
     permission_classes = [AllowAny]

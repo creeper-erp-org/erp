@@ -9,5 +9,6 @@ urlpatterns = [
      path('user/create/', UserDetailsInsertData.as_view(), name='createuserapi'),
      path('dashboard/', ProtectedView.as_view(), name='logout'),
      path('set/password/', UserSetPasswordView.as_view(), name='setpassword'),
-     path('login/refresh/', LoginRefreshView.as_view(), name='loginrefresh')
+     path('login/refresh/', LoginRefreshView.as_view(), name='loginrefresh'),
+     path('change/password/', UserSetPasswordView.as_view(), name='changepassword')
 ]
