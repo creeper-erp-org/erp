@@ -42,7 +42,7 @@ class UserSetPasswordView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class UserSetPasswordView(APIView):
+class UserChangePasswordView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
